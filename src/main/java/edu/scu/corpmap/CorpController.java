@@ -6,7 +6,8 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import java.io.File;
 
 public class CorpController {
-    public static final String DB_PATH = "C:\\Neo4j\\data\\databases\\new3graph.db";
+ //   public static final String DB_PATH = "/var/lib/neo4j/data/databases/corpmap.db";
+    public static final String DB_PATH ="C:\\Neo4j\\data\\databases\\corpmap.db";
     GraphDatabaseFactory dbFactory = new GraphDatabaseFactory();
     GraphDatabaseService db= dbFactory.newEmbeddedDatabase(new File(DB_PATH));
     private static CorpController corpController;
@@ -53,9 +54,9 @@ public class CorpController {
             }
             tx.success();
         }
-
-
+        db.shutdown();
     }
+
     public boolean setCtrlFromInvOrPartner(Node node,Iterable<Relationship> investRel){
         String maxInvName="";
         double maxInv=0f;
@@ -89,13 +90,6 @@ public class CorpController {
         if(maxInvName.equals("")) return false;
         return true;
     }
-
-
-
-
-
-
-
 
 
     private  void registerShutdownHook( final GraphDatabaseService graphDb )    {
